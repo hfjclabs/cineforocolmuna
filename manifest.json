@@ -1,0 +1,25 @@
+{
+  "name": "Cine Foro Colmuna",
+  "short_name": "CineForo",
+  "description": "Sistema Integrado de Gestión y Control de Entradas del Cine Foro Colmuna",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "https://lh3.googleusercontent.com/d/1rpMBuRJ7VGSh7PhLNVPmiqYqJwhQZN4d",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/1rpMBuRJ7VGSh7PhLNVPmiqYqJwhQZN4d",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

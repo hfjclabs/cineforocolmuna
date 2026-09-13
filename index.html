@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Cine Foro Colmuna</title>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2563eb">
+
+  <!-- iOS: hace que se abra como app de pantalla completa, sin barra de Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CineForo">
+  <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1rpMBuRJ7VGSh7PhLNVPmiqYqJwhQZN4d">
+
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: #f8fafc; font-family: -apple-system, sans-serif; }
+    #appFrame { border: none; width: 100%; height: 100%; display: block; }
+    #cargando {
+      position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 12px; background: #f8fafc; color: #374151; text-align: center; padding: 20px;
+    }
+    #cargando img { width: 70px; height: 70px; border-radius: 12px; }
+  </style>
+</head>
+<body>
+
+  <div id="cargando">
+    <img src="https://lh3.googleusercontent.com/d/1rpMBuRJ7VGSh7PhLNVPmiqYqJwhQZN4d" alt="Cine Foro Colmuna">
+    <p>Cargando Cine Foro Colmuna...</p>
+  </div>
+
+  <!--
+    ⚠️ IMPORTANTE: reemplaza la URL de abajo por la de tu propia implementación
+    de Apps Script (Implementar → Administrar implementaciones → copia la
+    "URL de la aplicación web", termina en /exec).
+  -->
+  <iframe
+    id="appFrame"
+    src="https://script.google.com/macros/s/AKfycbwiEQW-Ybb6V-l7c5QqVfVbdKXYgfJ35iSN7XEsI0Bum_ayrlgw3CbRbPfkaD0dkN_Taw/exec"
+    allow="camera; clipboard-write"
+    onload="document.getElementById('cargando').style.display='none';">
+  </iframe>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js').catch(function () {
+        // Si el service worker falla, la app igual funciona normal (solo no queda instalable offline)
+      });
+    }
+  </script>
+</body>
+</html>
