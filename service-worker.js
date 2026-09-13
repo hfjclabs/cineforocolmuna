@@ -4,7 +4,13 @@
 // vivo a Google Apps Script — nunca se sirve una copia vieja desde caché.
 
 const CACHE_NAME = 'cineforo-shell-v1';
-const ARCHIVOS_SHELL = ['./index.html', './manifest.json'];
+const ARCHIVOS_SHELL = [
+  './index.html',
+  './manifest.json',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/apple-touch-icon.png'
+];
 
 self.addEventListener('install', function (event) {
   event.waitUntil(
