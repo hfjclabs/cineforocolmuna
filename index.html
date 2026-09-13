@@ -22,9 +22,32 @@
       flex-direction: column; gap: 12px; background: #0d1b3e; color: #e5e7eb; text-align: center; padding: 20px;
     }
     #cargando img { width: 70px; height: 70px; border-radius: 12px; }
+
+    #bannerInstalar {
+      display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 9999;
+      background: #111827; color: #fff; padding: 12px 14px;
+      align-items: center; justify-content: space-between; gap: 10px;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.35); font-size: 13.5px;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    }
+    #bannerInstalar span { flex: 1; line-height: 1.3; }
+    #btnInstalarBanner {
+      background: #2563eb; color: #fff; border: none; padding: 9px 16px; border-radius: 8px;
+      font-weight: 700; font-size: 13.5px; cursor: pointer; white-space: nowrap;
+    }
+    #btnCerrarBanner {
+      background: transparent; color: #9ca3af; border: none; font-size: 20px;
+      cursor: pointer; padding: 0 4px; line-height: 1;
+    }
   </style>
 </head>
 <body>
+
+  <div id="bannerInstalar">
+    <span id="textoBanner">📲 Instala Cine Foro Colmuna para acceder más rápido</span>
+    <button id="btnInstalarBanner">Instalar</button>
+    <button id="btnCerrarBanner" aria-label="Cerrar">✕</button>
+  </div>
 
   <div id="cargando">
     <img src="icons/icon-192.png" alt="Cine Foro Colmuna">
@@ -49,6 +72,60 @@
         // Si el service worker falla, la app igual funciona normal (solo no queda instalable offline)
       });
     }
+
+    /* ===== BANNER DE "INSTALAR APP" ===== */
+    var deferredPrompt = null;
+    var banner = document.getElementById('bannerInstalar');
+    var textoBanner = document.getElementById('textoBanner');
+    var btnInstalarBanner = document.getElementById('btnInstalarBanner');
+    var btnCerrarBanner = document.getElementById('btnCerrarBanner');
+
+    function enModoInstalado() {
+      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    }
+    function esIOS() {
+      return /iphone|ipad|ipod/i.test(window.navigator.userAgent) && !window.MSStream;
+    }
+    function mostrarBanner() {
+      banner.style.display = 'flex';
+    }
+    function ocultarBanner() {
+      banner.style.display = 'none';
+    }
+
+    if (!enModoInstalado()) {
+      // Android / Chrome: el navegador avisa cuando la app cumple los requisitos para instalarse
+      window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault();
+        deferredPrompt = e;
+        textoBanner.innerText = '📲 Instala Cine Foro Colmuna para acceder más rápido';
+        btnInstalarBanner.style.display = 'inline-block';
+        mostrarBanner();
+      });
+
+      window.addEventListener('appinstalled', function () {
+        deferredPrompt = null;
+        ocultarBanner();
+      });
+
+      // iPhone/iPad: Apple no permite disparar la instalación por código, así que se muestran las instrucciones
+      if (esIOS()) {
+        textoBanner.innerText = '📲 Para instalar: toca Compartir ⬆️ y luego "Agregar a pantalla de inicio"';
+        btnInstalarBanner.style.display = 'none';
+        mostrarBanner();
+      }
+    }
+
+    btnInstalarBanner.addEventListener('click', function () {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.finally(function () {
+        deferredPrompt = null;
+        ocultarBanner();
+      });
+    });
+
+    btnCerrarBanner.addEventListener('click', ocultarBanner);
   </script>
 </body>
 </html>
