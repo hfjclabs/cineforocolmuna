@@ -3,7 +3,7 @@
 // al abrirla instalada. El contenido real del Cine Foro SIEMPRE se pide en
 // vivo a Google Apps Script — nunca se sirve una copia vieja desde caché.
 
-const CACHE_NAME = 'cineforo-shell-v1';
+const CACHE_NAME = 'cineforo-shell-v2';
 const ARCHIVOS_SHELL = [
   './index.html',
   './manifest.json',
